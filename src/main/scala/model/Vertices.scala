@@ -9,7 +9,7 @@ import scala.collection.Map
 /**
   * Created by Andras Makoviczki on 2016. 11. 24..
   */
-class Vertices(input:RDD[String],sc:SparkContext) {
+class Vertices(input:RDD[String],sc:SparkContext) extends Serializable {
 
   val tripleRDD: RDD[(String, String, String)] = input.map(line => {
     val l = line.split("\\s+")

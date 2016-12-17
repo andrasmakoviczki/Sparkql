@@ -10,9 +10,8 @@ object SparkInit {
     val conf = new SparkConf()
       .setAppName("Spar(k)ql")
       .setMaster(master)
-      //.set("spark.driver.allowMultipleContexts", "true")
-
-    System.setProperty("hadoop.home.dir", "C:\\Users\\andris.DESKTOP-BQJ4DSD\\Desktop\\hadoop-2.6.0")
+      .set("spark.driver.allowMultipleContexts", "true")
+    System.setProperty("hadoop.home.dir", "c:\\Program Files (x86)\\Apache\\hadoop-2.6.0")
 
     val sc = new SparkContext(conf)
     sc.setLogLevel("WARN")
