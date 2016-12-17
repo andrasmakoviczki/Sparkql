@@ -10,22 +10,22 @@ testeld(){
 	expected=$4
 	echo "TEST"
 	echo "Query: $query" 
-	spark-submit --class Main --driver-memory 4g --executor-memory 4g  --deploy-mode client --master spark://sparkql-ubuntu:7077 --num-executors 1 /home/sparkuser/Sparkql/target/scala-2.11/sparkql_2.11-1.0.jar "$inputVertex" "" "$query" 1>result.log 2>error.log
+	spark-submit --class Main --driver-memory 4g --executor-memory 4g  --deploy-mode client --master spark://sparkql-ubuntu:7077 --num-executors 1 ./target/scala-2.11/sparkql_2.11-1.0.jar "$inputVertex" "" "$query" 1>result.log 2>error.log
 
-  #wait until process done
+    #wait until process done
 	pid=$(echo $!)
-  while kill -0 $pid 2> /dev/null; do sleep 1; done;
-  
+  	while kill -0 $pid 2> /dev/null; do sleep 1; done;
+
 	count=$(grep "RESULT2" result.log | cut -d" " -f2)
-	if [[ -n "$count" && "$count" -eq "$expected" ]] 
+	if [[ -n "$count" && "$count" -eq "$expected" ]]
 	then
 		printf "[${Green}OK${NC}]\n"
-	else 
+	else
 		printf "[${Red}NOK${NC}]: got: $count instead of $expected\n"
 	fi
 }
 
-inputVertex="/home/sparkuser/proba/testelo/LUBM_1000.n3"
+inputVertex="./src/main/resource/LUBM_1000.n3"
 inputEdge=$inputVertex
 
 #LUBM 1
