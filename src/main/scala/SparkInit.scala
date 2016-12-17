@@ -5,13 +5,17 @@ import org.apache.spark.{SparkConf, SparkContext}
   */
 object SparkInit {
 
+  def isWindows : Boolean = System.getProperty("os.name").toLowerCase() contains "win"
+
   def initialize(): SparkContext ={
     val master = "local"
     val conf = new SparkConf()
       .setAppName("Spar(k)ql")
-      .setMaster(master)
-      .set("spark.driver.allowMultipleContexts", "true")
-    System.setProperty("hadoop.home.dir", "c:\\Program Files (x86)\\Apache\\hadoop-2.6.0")
+
+    if(isWindows) {
+      conf.setMaster(master)
+      System.setProperty("hadoop.home.dir", "c:\\Program Files (x86)\\Apache\\hadoop-2.6.0")
+    }
 
     val sc = new SparkContext(conf)
     sc.setLogLevel("WARN")

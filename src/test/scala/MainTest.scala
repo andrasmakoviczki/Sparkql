@@ -3,8 +3,13 @@
   */
 
 class MainTest extends org.scalatest.FunSuite with com.holdenkarau.spark.testing.SharedSparkContext {
-  System.setProperty("hadoop.home.dir", "c:\\Program Files (x86)\\Apache\\hadoop-2.6.0\\")
-  conf.set("spark.driver.allowMultipleContexts", "true")
+  def isWindows : Boolean = System.getProperty("os.name").toLowerCase() contains "win"
+
+  if(isWindows){
+    System.setProperty("hadoop.home.dir", "c:\\Program Files (x86)\\Apache\\hadoop-2.6.0\\")
+    //conf.set("spark.driver.allowMultipleContexts", "true")
+  }
+
   val file = "src/main/resource/LUBM_1000.n3"
 
   test("Test1") {
@@ -64,7 +69,7 @@ class MainTest extends org.scalatest.FunSuite with com.holdenkarau.spark.testing
   }
 
   test("Test6") {
-    sc.setLogLevel("DEBUG")
+    //sc.setLogLevel("DEBUG")
     val query = "?X <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://spark.elte.hu#Student>"
     val args = Array(file,"",query)
     val expected = 23734
